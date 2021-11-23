@@ -1,6 +1,7 @@
 package com.samples.test.data
 
 import com.samples.model.*
+import com.samples.test.common.BOARD_SIZE
 
 class GameRule {
 
@@ -24,6 +25,7 @@ class GameRule {
     private fun isWinnerAvailable(cellList: List<Cell>, playerPickedCell: Cell): Boolean =
         isPlayerSelectedAllCellsInARow(cellList, playerPickedCell)
                 || isPlayerSelectedAllTheCellsInAColumn(cellList, playerPickedCell)
+                || isPlayerSelectedAllCellsInRightDiagonal(cellList, playerPickedCell)
 
     private fun isPlayerSelectedAllCellsInARow(cells: List<Cell>, playerPickedCell: Cell): Boolean {
         val selectedCellsInRow =
@@ -39,6 +41,20 @@ class GameRule {
             it.column == playerPickedCell.column && it.isSameCellState(playerPickedCell)
         }
         return selectedCellsInColumn.size > 2
+    }
+
+    private fun isPlayerSelectedAllCellsInRightDiagonal(
+        cells: List<Cell>,
+        playerPickedCell: Cell,
+    ): Boolean {
+        val selectedCellsInRightDiagonal = mutableListOf<Cell>()
+        for (index in 0 until BOARD_SIZE) {
+            val cellInDiagonal = cells.find {
+                it.isSameRowAndColumn(index) && it.isSameCellState(playerPickedCell)
+            }
+            cellInDiagonal?.let { selectedCellsInRightDiagonal.add(it) }
+        }
+        return selectedCellsInRightDiagonal.size > 2
     }
 
     private fun playerType(state: CellState) = when (state) {
