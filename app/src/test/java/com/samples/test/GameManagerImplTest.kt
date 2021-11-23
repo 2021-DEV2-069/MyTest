@@ -55,6 +55,25 @@ class GameManagerImplTest {
         assertEquals(1, xSelectedCellSize)
     }
 
+    @Test
+    fun resetBoard_boardResetToInitialStateWithAllTheCellHavingUnSelectedState() = runBlockingTest {
+        val xSelectedCell = Cell(0, 0)
+        val oSelectedCell = Cell(1, 0)
+
+        gameManager.cellSelection(xSelectedCell, XPlayer)
+        gameManager.cellSelection(oSelectedCell, OPlayer)
+        gameManager.resetBoard()
+
+        with(getBoard()) {
+            val unSelectedCellSize = getCellSize(cells, UnSelected)
+            val xSelectedCellSize = getCellSize(cells, XSelected)
+            val oSelectedCellSize = getCellSize(cells, OSelected)
+            assertEquals(9, unSelectedCellSize)
+            assertEquals(0, xSelectedCellSize)
+            assertEquals(0, oSelectedCellSize)
+        }
+    }
+
     private fun getCellSize(cells: List<Cell>, cellState: CellState) =
         cells.filter { it.state == cellState }.size
 

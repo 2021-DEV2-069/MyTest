@@ -17,6 +17,10 @@ class GameManagerImpl : GameManager {
         return selectedCell
     }
 
+    override fun resetBoard() {
+        boardFlow.value = Board.getNewBoardInstance()
+    }
+
     private fun getCurrentPlayer(playerType: PlayerType) = when (playerType) {
         OPlayer -> OSelected
         XPlayer -> XSelected

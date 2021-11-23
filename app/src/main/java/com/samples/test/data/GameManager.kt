@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface GameManager {
     fun getBoard(): Flow<Board>
     fun cellSelection(playerPickedCell: Cell, playerType: PlayerType): Cell?
+    fun resetBoard()
 }
