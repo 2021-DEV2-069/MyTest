@@ -6,11 +6,14 @@ import com.samples.mytest.common.getOrAwaitValue
 import com.samples.test.common.cleanBoardCells
 import com.samples.test.data.GameManager
 import com.samples.test.model.Board
+import com.samples.test.model.GameOnGoing
+import com.samples.test.model.XPlayer
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -41,4 +44,15 @@ class GameViewModelTest {
 
         assertEquals(actualBoardState, expectedBoard)
     }
+
+    @Test
+    fun initialGameStatus_willBeGameOnGoingWithXPlayerAsNextPlayer() {
+        createGameViewModel()
+
+        val gameOnGoing = gameViewModel.gameStatus.getOrAwaitValue()
+
+        Assert.assertTrue(gameOnGoing is GameOnGoing)
+        Assert.assertTrue((gameOnGoing as? GameOnGoing)?.nextPlayer is XPlayer)
+    }
+
 }
