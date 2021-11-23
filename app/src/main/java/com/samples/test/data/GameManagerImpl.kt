@@ -11,7 +11,7 @@ class GameManagerImpl : GameManager {
     override fun cellSelection(playerPickedCell: Cell, playerType: PlayerType): Cell? {
         val cells = boardFlow.value.cells
         val selectedCell: Cell? =
-            cells.find { it.row == playerPickedCell.row && it.column == playerPickedCell.column }
+            cells.find { it.isCellAValidSelection(playerPickedCell) }
         selectedCell?.state = getCurrentPlayer(playerType)
         boardFlow.value = Board(cells)
         return selectedCell

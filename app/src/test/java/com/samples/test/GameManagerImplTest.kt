@@ -41,6 +41,20 @@ class GameManagerImplTest {
         }
     }
 
+    @Test
+    fun cellSelection_willBeImmutableIfTheCellIsAlreadySelectedByAPlayer() = runBlockingTest {
+        val cellSelected = Cell(0, 0)
+
+        gameManager.cellSelection(cellSelected, XPlayer)
+        gameManager.cellSelection(cellSelected, OPlayer)
+
+        val board = getBoard()
+        val unSelectedCellSize = getCellSize(board.cells, UnSelected)
+        val xSelectedCellSize = getCellSize(board.cells, XSelected)
+        assertEquals(8, unSelectedCellSize)
+        assertEquals(1, xSelectedCellSize)
+    }
+
     private fun getCellSize(cells: List<Cell>, cellState: CellState) =
         cells.filter { it.state == cellState }.size
 
