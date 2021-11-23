@@ -50,10 +50,11 @@ class GameRule {
     ): Boolean {
         val selectedCellsInRightDiagonal = mutableListOf<Cell>()
         for (index in 0 until BOARD_SIZE) {
-            val cellInDiagonal = cells.find {
-                it.isSameRowAndColumn(index) && it.isSameCellState(playerPickedCell)
+            findDiagonalCellWithSameCellState(cells,
+                playerPickedCell,
+                index)?.let { cellInDiagonal ->
+                selectedCellsInRightDiagonal.add(cellInDiagonal)
             }
-            cellInDiagonal?.let { selectedCellsInRightDiagonal.add(it) }
         }
         return selectedCellsInRightDiagonal.size > 2
     }
@@ -65,13 +66,17 @@ class GameRule {
         val selectedCellsInLeftDiagonal = mutableListOf<Cell>()
         var columnIndex = 2
         for (rowIndex in 0 until BOARD_SIZE) {
-            val cellInDiagonal = cells.find {
-                it.isSameRowAndColumn(rowIndex, columnIndex) && it.isSameCellState(playerPickedCell)
-            }
-            cellInDiagonal?.let { selectedCellsInLeftDiagonal.add(it) }
+            findDiagonalCellWithSameCellState(cells, playerPickedCell, rowIndex, columnIndex)
+                ?.let { cellInDiagonal -> selectedCellsInLeftDiagonal.add(cellInDiagonal) }
             columnIndex--
         }
         return selectedCellsInLeftDiagonal.size > 2
+    }
+
+    private fun findDiagonalCellWithSameCellState(
+        cells: List<Cell>, playerPickedCell: Cell, rowIndex: Int, columnIndex: Int = rowIndex,
+    ): Cell? = cells.find {
+        it.isSameRowAndColumn(rowIndex, columnIndex) && it.isSameCellState(playerPickedCell)
     }
 
     private fun playerType(state: CellState) = when (state) {
