@@ -1,11 +1,7 @@
-package com.samples.test.game
+package com.samples.test.view.game
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.samples.mytest.common.MainCoroutineRule
-import com.samples.mytest.common.getOrAwaitValue
-import com.samples.test.common.BOARD_SIZE
-import com.samples.test.common.cleanBoardCells
-import com.samples.test.common.getCellSize
+import com.samples.test.common.*
 import com.samples.test.data.GameManager
 import com.samples.test.data.GameManagerImpl
 import com.samples.test.model.*

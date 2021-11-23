@@ -1,4 +1,4 @@
-package com.samples.mytest.common
+package com.samples.test.common
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

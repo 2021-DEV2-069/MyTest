@@ -1,4 +1,4 @@
-package com.samples.test.game
+package com.samples.test.view.game
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

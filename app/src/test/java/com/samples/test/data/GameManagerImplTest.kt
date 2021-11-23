@@ -1,8 +1,7 @@
-package com.samples.test
+package com.samples.test.data
 
 import com.samples.test.common.BOARD_SIZE
-import com.samples.test.data.GameManagerImpl
-import com.samples.test.data.GameRule
+import com.samples.test.common.getCellSize
 import com.samples.test.model.*
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -120,9 +119,6 @@ class GameManagerImplTest {
         Assert.assertTrue(gameStatus is GameWin)
         Assert.assertTrue((gameStatus as? GameWin)?.player is XPlayer)
     }
-
-    private fun getCellSize(cells: List<Cell>, cellState: CellState) =
-        cells.filter { it.state == cellState }.size
 
     private suspend fun getBoard() = gameManager.getBoard().first()
 }

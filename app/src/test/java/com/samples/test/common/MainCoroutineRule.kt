@@ -1,4 +1,4 @@
-package com.samples.mytest.common
+package com.samples.test.common
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
