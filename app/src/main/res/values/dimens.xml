@@ -2,4 +2,6 @@
 <resources>
     <dimen name="default_space">16dp</dimen>
     <dimen name="default_small_space">8dp</dimen>
+    <dimen name="item_background_border_width">1dp</dimen>
+    <dimen name="cell_size">100dp</dimen>
 </resources>

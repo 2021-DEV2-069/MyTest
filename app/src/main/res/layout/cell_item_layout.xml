@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data></data>
+
+    <FrameLayout
+        android:id="@+id/cellItemView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/cell_size"
+        android:layout_margin="@dimen/default_small_space">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/cell_item" />
+
+    </FrameLayout>
+</layout>
