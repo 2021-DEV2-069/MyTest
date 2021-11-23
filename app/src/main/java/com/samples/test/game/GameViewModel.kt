@@ -42,6 +42,11 @@ class GameViewModel constructor(private val gameManager: GameManager) : ViewMode
         }
     }
 
+    fun onRestartClicked() {
+        gameManager.resetBoard()
+        _gameStatus.value = GameOnGoing(XPlayer)
+    }
+
 }
 
 

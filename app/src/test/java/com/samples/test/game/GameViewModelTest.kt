@@ -3,8 +3,11 @@ package com.samples.test.game
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.samples.mytest.common.MainCoroutineRule
 import com.samples.mytest.common.getOrAwaitValue
+import com.samples.test.common.BOARD_SIZE
 import com.samples.test.common.cleanBoardCells
+import com.samples.test.common.getCellSize
 import com.samples.test.data.GameManager
+import com.samples.test.data.GameManagerImpl
 import com.samples.test.model.*
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -13,6 +16,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -68,6 +72,24 @@ class GameViewModelTest {
         val gameWin = gameViewModel.gameStatus.getOrAwaitValue()
         Assert.assertTrue(gameWin is GameWin)
         Assert.assertTrue((gameWin as? GameWin)?.player is OPlayer)
+    }
+
+    @Test
+    fun onRestartClicked_clearsTheGameToInitialState() {
+        val expectedUnselectedCellSize = BOARD_SIZE * BOARD_SIZE
+        val gameViewModel = GameViewModel(GameManagerImpl(mockk()))
+        gameViewModel.boardState.value = Board(
+            cleanBoardCells.toMutableList().apply { set(4, Cell(1, 1, XSelected)) }
+        )
+        gameViewModel.gameStatus.value = GameOnGoing(OPlayer)
+
+        gameViewModel.onRestartClicked()
+
+        val actualBoardState = gameViewModel.boardState.getOrAwaitValue()
+        val gameOnGoing = gameViewModel.gameStatus.getOrAwaitValue()
+        assertEquals(expectedUnselectedCellSize, getCellSize(actualBoardState.cells, UnSelected))
+        assertTrue(gameOnGoing is GameOnGoing)
+        assertTrue((gameOnGoing as? GameOnGoing)?.nextPlayer is XPlayer)
     }
 
 }
