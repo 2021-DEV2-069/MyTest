@@ -24,7 +24,11 @@ class GameManagerImpl constructor(private val gameRule: GameRule) : GameManager 
     override fun getGameStatus(cell: Cell): GameStatus? {
         val board = boardFlow.value
         return when (gameRule.findTheWinner(cellList = board.cells, playerPickedCell = cell)) {
-            null -> GameOnGoing(nextPlayer = if (cell.state == XSelected) OPlayer else XPlayer)
+            null -> if (!board.isCellLeftToPick()) {
+                GameDraw
+            } else {
+                GameOnGoing(nextPlayer = if (cell.state == XSelected) OPlayer else XPlayer)
+            }
             else -> null
         }
     }

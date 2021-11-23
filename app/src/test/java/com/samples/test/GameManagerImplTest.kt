@@ -91,6 +91,25 @@ class GameManagerImplTest {
         Assert.assertTrue((gameStatus as? GameOnGoing)?.nextPlayer is OPlayer)
     }
 
+    @Test
+    fun gameStatus_returnGameDrawIfThereIsNoWinnerFoundAndThereAreNoCellsLeftToPick() {
+        gameManager.cellSelection(Cell(0, 0), XPlayer)
+        gameManager.cellSelection(Cell(1, 0), OPlayer)
+        gameManager.cellSelection(Cell(2, 0), XPlayer)
+        gameManager.cellSelection(Cell(1, 1), OPlayer)
+        gameManager.cellSelection(Cell(0, 1), XPlayer)
+        gameManager.cellSelection(Cell(2, 1), OPlayer)
+        gameManager.cellSelection(Cell(1, 2), XPlayer)
+        gameManager.cellSelection(Cell(0, 2), OPlayer)
+        gameManager.cellSelection(Cell(2, 2), XPlayer)
+        val lastSelectedCell = Cell(2, 2, state = XSelected)
+        coEvery { gameRule.findTheWinner(getBoard().cells, lastSelectedCell) } returns null
+
+        val gameStatus = gameManager.getGameStatus(lastSelectedCell)
+
+        Assert.assertTrue(gameStatus is GameDraw)
+    }
+
     private fun getCellSize(cells: List<Cell>, cellState: CellState) =
         cells.filter { it.state == cellState }.size
 

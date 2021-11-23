@@ -3,6 +3,7 @@ package com.samples.model
 import com.samples.test.common.BOARD_SIZE
 
 class Board(val cells: List<Cell>) {
+    fun isCellLeftToPick() = cells.any { it.state == UnSelected }
 
     companion object {
 
