@@ -3,7 +3,7 @@ package com.samples.test.data
 import com.samples.model.*
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class GameManagerImpl : GameManager {
+class GameManagerImpl constructor(private val gameRule: GameRule) : GameManager {
     private var boardFlow: MutableStateFlow<Board> = MutableStateFlow(Board.getNewBoardInstance())
 
     override fun getBoard() = boardFlow
@@ -19,6 +19,14 @@ class GameManagerImpl : GameManager {
 
     override fun resetBoard() {
         boardFlow.value = Board.getNewBoardInstance()
+    }
+
+    override fun getGameStatus(cell: Cell): GameStatus? {
+        val board = boardFlow.value
+        return when (gameRule.findTheWinner(cellList = board.cells, playerPickedCell = cell)) {
+            null -> GameOnGoing(nextPlayer = if (cell.state == XSelected) OPlayer else XPlayer)
+            else -> null
+        }
     }
 
     private fun getCurrentPlayer(playerType: PlayerType) = when (playerType) {

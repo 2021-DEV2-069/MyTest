@@ -3,15 +3,20 @@ package com.samples.test
 import com.samples.model.*
 import com.samples.test.common.BOARD_SIZE
 import com.samples.test.data.GameManagerImpl
+import com.samples.test.data.GameRule
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class GameManagerImplTest {
-    private val gameManager = GameManagerImpl()
+    private val gameRule = mockk<GameRule>()
+    private val gameManager = GameManagerImpl(gameRule)
 
     @Test
     fun getInitialBoard_willReturnBoardWithAllTheCellsInUnSelectedState() = runBlockingTest {
@@ -19,7 +24,7 @@ class GameManagerImplTest {
 
         val board = getBoard()
 
-        val actualCellSize =  getCellSize(board.cells, UnSelected)
+        val actualCellSize = getCellSize(board.cells, UnSelected)
         assertEquals(expectedCellSize, actualCellSize)
     }
 
@@ -72,6 +77,18 @@ class GameManagerImplTest {
             assertEquals(0, xSelectedCellSize)
             assertEquals(0, oSelectedCellSize)
         }
+    }
+
+    @Test
+    fun gameStatus_returnGameOnGoingStatusIfThereIsNoWinnerFound() {
+        gameManager.cellSelection(Cell(0, 0), XPlayer)
+        val lastSelectedCell = Cell(0, 0, state = XSelected)
+        coEvery { gameRule.findTheWinner(getBoard().cells, lastSelectedCell) } returns null
+
+        val gameStatus = gameManager.getGameStatus(lastSelectedCell)
+
+        Assert.assertTrue(gameStatus is GameOnGoing)
+        Assert.assertTrue((gameStatus as? GameOnGoing)?.nextPlayer is OPlayer)
     }
 
     private fun getCellSize(cells: List<Cell>, cellState: CellState) =
