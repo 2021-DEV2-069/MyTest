@@ -110,6 +110,17 @@ class GameManagerImplTest {
         Assert.assertTrue(gameStatus is GameDraw)
     }
 
+    @Test
+    fun gameStatus_returnGameWinStatusIfAWinnerIsFoundBasedOnGameRule() {
+        val cellXSelected = Cell(0, 2, state = XSelected)
+        coEvery { gameRule.findTheWinner(getBoard().cells, cellXSelected) } returns XPlayer
+
+        val gameStatus = gameManager.getGameStatus(cellXSelected)
+
+        Assert.assertTrue(gameStatus is GameWin)
+        Assert.assertTrue((gameStatus as? GameWin)?.player is XPlayer)
+    }
+
     private fun getCellSize(cells: List<Cell>, cellState: CellState) =
         cells.filter { it.state == cellState }.size
 

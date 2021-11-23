@@ -10,5 +10,5 @@ interface GameManager {
     fun getBoard(): Flow<Board>
     fun cellSelection(playerPickedCell: Cell, playerType: PlayerType): Cell?
     fun resetBoard()
-    fun getGameStatus(cell: Cell): GameStatus?
+    fun getGameStatus(cell: Cell): GameStatus
 }
