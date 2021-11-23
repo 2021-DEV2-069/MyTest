@@ -31,7 +31,8 @@ fun setGameStatusText(
                     getString(R.string.winner, playerName)
                 }
             }
-            else -> {
+            is GameDraw -> {
+                textView.text = textView.context.getString(R.string.game_draw)
             }
         }
     }

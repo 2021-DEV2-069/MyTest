@@ -6,4 +6,6 @@
     <string name="o_player">Oplayer</string>
     <string name="cell_item">Cell Item</string>
     <string name="winner"> %s won!</string>
+    <string name="game_draw">Draw!</string>
+
 </resources>

@@ -75,6 +75,23 @@ class GameBoardFragmentTest {
         verifyWinner(winnerTitle)
     }
 
+    @Test
+    fun recyclerViewCellSelection_whenAllTheCellsAreSelectedThenDisplayGameDraw() {
+        launchFragment()
+
+        onRecyclerViewItemClick(0)
+        onRecyclerViewItemClick(3)
+        onRecyclerViewItemClick(6)
+        onRecyclerViewItemClick(4)
+        onRecyclerViewItemClick(1)
+        onRecyclerViewItemClick(7)
+        onRecyclerViewItemClick(5)
+        onRecyclerViewItemClick(2)
+        onRecyclerViewItemClick(8)
+
+        onView(withId(R.id.textViewGameStatus)).apply { withText(R.string.game_draw) }
+    }
+
 
     private fun onRecyclerViewItemClick(index: Int) {
         onView(withId(R.id.gameRecyclerView)).apply {
