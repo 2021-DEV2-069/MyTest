@@ -3,6 +3,7 @@ package com.samples.test.view.game
 import android.content.Context
 import android.widget.FrameLayout
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
@@ -92,6 +93,21 @@ class GameBoardFragmentTest {
         onView(withId(R.id.textViewGameStatus)).apply { withText(R.string.game_draw) }
     }
 
+
+    @Test
+    fun restartButton_whenCellsArePickedByThePlayerAndResetClickRevertTheGameStatusToInitial() {
+        launchFragment()
+
+        onRecyclerViewItemClick(0)
+        onRecyclerViewItemClick(3)
+        onView(withId(R.id.buttonRestartGame)).perform(ViewActions.click())
+
+        val initialPlayerName = appContext.getString(R.string.x_player)
+        onView(withId(R.id.textViewGameStatus)).check(
+            ViewAssertions.matches(withSubstring(appContext.getString(R.string.player_turn,
+                initialPlayerName)))
+        )
+    }
 
     private fun onRecyclerViewItemClick(index: Int) {
         onView(withId(R.id.gameRecyclerView)).apply {
