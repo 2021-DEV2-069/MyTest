@@ -26,6 +26,7 @@ class GameRule {
         isPlayerSelectedAllCellsInARow(cellList, playerPickedCell)
                 || isPlayerSelectedAllTheCellsInAColumn(cellList, playerPickedCell)
                 || isPlayerSelectedAllCellsInRightDiagonal(cellList, playerPickedCell)
+                || isPlayerSelectedAllCellsInLeftDiagonal(cellList, playerPickedCell)
 
     private fun isPlayerSelectedAllCellsInARow(cells: List<Cell>, playerPickedCell: Cell): Boolean {
         val selectedCellsInRow =
@@ -55,6 +56,22 @@ class GameRule {
             cellInDiagonal?.let { selectedCellsInRightDiagonal.add(it) }
         }
         return selectedCellsInRightDiagonal.size > 2
+    }
+
+    private fun isPlayerSelectedAllCellsInLeftDiagonal(
+        cells: List<Cell>,
+        playerPickedCell: Cell,
+    ): Boolean {
+        val selectedCellsInLeftDiagonal = mutableListOf<Cell>()
+        var columnIndex = 2
+        for (rowIndex in 0 until BOARD_SIZE) {
+            val cellInDiagonal = cells.find {
+                it.isSameRowAndColumn(rowIndex, columnIndex) && it.isSameCellState(playerPickedCell)
+            }
+            cellInDiagonal?.let { selectedCellsInLeftDiagonal.add(it) }
+            columnIndex--
+        }
+        return selectedCellsInLeftDiagonal.size > 2
     }
 
     private fun playerType(state: CellState) = when (state) {

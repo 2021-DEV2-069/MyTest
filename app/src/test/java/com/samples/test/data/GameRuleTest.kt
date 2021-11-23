@@ -59,4 +59,21 @@ class GameRuleTest {
 
         assertEquals(XPlayer, player)
     }
+
+    @Test
+    fun findTheWinner_returnAWinnerIfAPlayerPicksAllThe3CellsInLeftDiagonal() {
+        val cellListWithXPlayerAsWinner = cleanBoardCells.toMutableList().apply {
+            set(0, Cell(2, 0, XSelected))
+            set(1, Cell(1, 0, OSelected))
+            set(4, Cell(1, 1, XSelected))
+            set(3, Cell(0, 1, OSelected))
+            set(8, Cell(0, 2, XSelected))
+        }
+        val recentSelectedCell = Cell(0, 2, XSelected)
+
+        val player =
+            gameRuleRequest.findTheWinner(cellListWithXPlayerAsWinner, recentSelectedCell)
+
+        assertEquals(XPlayer, player)
+    }
 }
