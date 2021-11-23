@@ -16,10 +16,10 @@ class GameRule {
     }
 
     private fun filterUnSelectedCell(cellList: List<Cell>) =
-        cellList.filterNot { it.state == UnSelected }
+        cellList.filterNot { it.isCellUnSelected }
 
     private fun isThePlayerPickedCell(unSelectedCell: Cell, playerPickedCell: Cell): Boolean =
-        unSelectedCell.row == playerPickedCell.row && unSelectedCell.column == playerPickedCell.column
+        unSelectedCell.isSameRowAndColumn(playerPickedCell.row, playerPickedCell.column)
 
     private fun isPlayerSelectedAllCellsInARow(cells: List<Cell>, playerPickedCell: Cell): Boolean {
         val selectedCellsInRow =

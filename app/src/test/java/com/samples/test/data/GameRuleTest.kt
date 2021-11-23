@@ -12,7 +12,7 @@ class GameRuleTest {
     private val gameRuleRequest = GameRule()
 
     @Test
-    fun checkForWinner_returnAWinnerIfAPlayerPicksAllThe3CellsInARows() {
+    fun findTheWinner_returnAWinnerIfAPlayerPicksAllThe3CellsInARows() {
         val cellListWithXPlayerAsWinner = cleanBoardCells.toMutableList().apply {
             set(0, Cell(0, 0, XSelected))
             set(3, Cell(0, 1, OSelected))
