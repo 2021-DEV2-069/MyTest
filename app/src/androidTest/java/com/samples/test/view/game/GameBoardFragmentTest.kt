@@ -1,8 +1,10 @@
 package com.samples.test.view.game
 
 import android.content.Context
+import android.widget.FrameLayout
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withSubstring
@@ -10,10 +12,8 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import com.samples.test.R
 import com.samples.test.common.BOARD_SIZE
-import com.samples.test.utils.isClickable
-import com.samples.test.utils.isDisplayed
-import com.samples.test.utils.launchFragmentInHiltContainer
-import com.samples.test.utils.withText
+import com.samples.test.utils.*
+import com.samples.test.view.game.adapter.GameAdapter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -57,6 +57,39 @@ class GameBoardFragmentTest {
         onView(withId(R.id.gameRecyclerView)).apply {
             ViewMatchers.isDisplayed()
             check(ViewAssertions.matches(ViewMatchers.hasChildCount(totalCell)))
+        }
+    }
+
+    @Test
+    fun recyclerViewCellSelection_whenXPlayerSelectsAllTheCellsInTheFirstColumnThenDisplayXPlayerAsTheWinner() {
+        launchFragment()
+
+        onRecyclerViewItemClick(0)
+        onRecyclerViewItemClick(4)
+        onRecyclerViewItemClick(3)
+        onRecyclerViewItemClick(7)
+        onRecyclerViewItemClick(6)
+
+        val xPlayerName = appContext.getString(R.string.x_player)
+        val winnerTitle = appContext.getString(R.string.winner, xPlayerName)
+        verifyWinner(winnerTitle)
+    }
+
+
+    private fun onRecyclerViewItemClick(index: Int) {
+        onView(withId(R.id.gameRecyclerView)).apply {
+            perform(
+                RecyclerViewActions.actionOnItemAtPosition<GameAdapter.MyViewHolder>(
+                    index,
+                    recyclerChildAction<FrameLayout>(R.id.cellItemView) { callOnClick() }
+                )
+            )
+        }
+    }
+
+    private fun verifyWinner(winnerTitle: String) {
+        onView(withId(R.id.textViewGameStatus)).apply {
+            check(ViewAssertions.matches(withSubstring(winnerTitle)))
         }
     }
 

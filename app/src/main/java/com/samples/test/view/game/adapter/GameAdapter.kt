@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.samples.test.databinding.CellItemLayoutBinding
 import com.samples.test.model.Cell
 
-class GameAdapter :
+class GameAdapter(val onItemClicked: (cellValue: Cell) -> Unit) :
     ListAdapter<Cell, GameAdapter.MyViewHolder>(CellListDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -27,6 +27,10 @@ class GameAdapter :
     inner class MyViewHolder(private val binding: CellItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(cellValue: Cell) {
+            binding.cell = cellValue
+            binding.cellItemView.setOnClickListener {
+                onItemClicked(cellValue)
+            }
         }
     }
 }

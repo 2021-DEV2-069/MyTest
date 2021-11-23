@@ -33,7 +33,9 @@ class GameBoardFragment : Fragment() {
         with(dataBindings) {
             lifecycleOwner = this@GameBoardFragment
             viewModel = gameViewModel
-            adapter = GameAdapter()
+            adapter = GameAdapter {
+                gameViewModel.onCellClick(it)
+            }
             gameAdapter = adapter
         }
         initViewStateObservers()
