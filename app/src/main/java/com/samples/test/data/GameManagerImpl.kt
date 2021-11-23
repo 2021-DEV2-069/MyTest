@@ -2,8 +2,9 @@ package com.samples.test.data
 
 import com.samples.test.model.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
-class GameManagerImpl constructor(private val gameRule: GameRule) : GameManager {
+class GameManagerImpl @Inject constructor(private val gameRule: GameRule) : GameManager {
     private var boardFlow: MutableStateFlow<Board> = MutableStateFlow(Board.getNewBoardInstance())
 
     override fun getBoard() = boardFlow

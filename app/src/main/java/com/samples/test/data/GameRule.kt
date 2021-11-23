@@ -2,8 +2,9 @@ package com.samples.test.data
 
 import com.samples.test.common.BOARD_SIZE
 import com.samples.test.model.*
+import javax.inject.Inject
 
-class GameRule {
+class GameRule @Inject constructor() {
 
     fun findTheWinner(cellList: List<Cell>, playerPickedCell: Cell): PlayerType? {
         filterUnSelectedCell(cellList).forEach { unSelectedCell ->

@@ -1,6 +1,8 @@
 package com.samples.test.model
 
-sealed class PlayerType
+import com.samples.test.R
 
-object XPlayer : PlayerType()
-object OPlayer : PlayerType()
+sealed class PlayerType(val playerNameResource: Int)
+
+object XPlayer : PlayerType(R.string.x_player)
+object OPlayer : PlayerType(R.string.o_player)
