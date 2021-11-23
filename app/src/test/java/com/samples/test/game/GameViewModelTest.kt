@@ -5,9 +5,7 @@ import com.samples.mytest.common.MainCoroutineRule
 import com.samples.mytest.common.getOrAwaitValue
 import com.samples.test.common.cleanBoardCells
 import com.samples.test.data.GameManager
-import com.samples.test.model.Board
-import com.samples.test.model.GameOnGoing
-import com.samples.test.model.XPlayer
+import com.samples.test.model.*
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -53,6 +51,23 @@ class GameViewModelTest {
 
         Assert.assertTrue(gameOnGoing is GameOnGoing)
         Assert.assertTrue((gameOnGoing as? GameOnGoing)?.nextPlayer is XPlayer)
+    }
+
+    @Test
+    fun onCellClick_verifyWhetherGameStatusUpdatedToGameWin() {
+        createGameViewModel()
+        val cell = Cell(0, 0)
+        coEvery {
+            gameManager.cellSelection(cell, XPlayer)
+        } returns cell
+        coEvery { gameManager.getGameStatus(cell) } returns GameWin(OPlayer)
+
+
+        gameViewModel.onCellClick(cell)
+
+        val gameWin = gameViewModel.gameStatus.getOrAwaitValue()
+        Assert.assertTrue(gameWin is GameWin)
+        Assert.assertTrue((gameWin as? GameWin)?.player is OPlayer)
     }
 
 }

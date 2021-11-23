@@ -4,10 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.samples.test.data.GameManager
-import com.samples.test.model.Board
-import com.samples.test.model.GameOnGoing
-import com.samples.test.model.GameStatus
-import com.samples.test.model.XPlayer
+import com.samples.test.model.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -29,6 +26,22 @@ class GameViewModel constructor(private val gameManager: GameManager) : ViewMode
             .getBoard()
             .collect { _boardState.value = it }
     }
+
+    fun onCellClick(cell: Cell) {
+        val gameStatus = _gameStatus.value
+        if (gameStatus is GameOnGoing) {
+            gameManager.cellSelection(cell, gameStatus.nextPlayer)?.let { updatedCell ->
+                updateGameStatus(updatedCell)
+            }
+        }
+    }
+
+    private fun updateGameStatus(updatedCell: Cell) {
+        viewModelScope.launch {
+            _gameStatus.value = gameManager.getGameStatus(updatedCell)
+        }
+    }
+
 }
 
 
