@@ -1,9 +1,6 @@
 package com.samples.test.data
 
-import com.samples.model.Cell
-import com.samples.model.OSelected
-import com.samples.model.XPlayer
-import com.samples.model.XSelected
+import com.samples.model.*
 import com.samples.test.common.cleanBoardCells
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -26,5 +23,23 @@ class GameRuleTest {
         val player = gameRuleRequest.findTheWinner(cellListWithXPlayerAsWinner, recentSelectedCell)
 
         assertEquals(XPlayer, player)
+    }
+
+    @Test
+    fun findTheWinner_returnAWinnerIfAPlayerPicksAllThe3CellsInAColumn() {
+        val cellListWithOPlayerAsWinner = cleanBoardCells.toMutableList().apply {
+            set(4, Cell(1, 1, XSelected))
+            set(0, Cell(0, 0, OSelected))
+            set(7, Cell(1, 2, XSelected))
+            set(1, Cell(0, 1, OSelected))
+            set(8, Cell(2, 2, XSelected))
+            set(2, Cell(0, 2, OSelected))
+        }
+        val recentSelectedCell = Cell(0, 2, OSelected)
+
+        val player =
+            gameRuleRequest.findTheWinner(cellListWithOPlayerAsWinner, recentSelectedCell)
+
+        assertEquals(OPlayer, player)
     }
 }

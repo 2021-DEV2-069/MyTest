@@ -11,4 +11,5 @@ data class Cell(val column: Int, val row: Int, var state: CellState = UnSelected
     fun isSameRowAndColumn(rowIndex: Int, columnIndex: Int) =
         row == rowIndex && column == columnIndex
 
+    fun isSameCellState(playerPicked: Cell) = playerPicked.state == state
 }
