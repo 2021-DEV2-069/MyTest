@@ -1,4 +1,4 @@
-package com.samples.model
+package com.samples.test.model
 
 data class Cell(val column: Int, val row: Int, var state: CellState = UnSelected) {
 

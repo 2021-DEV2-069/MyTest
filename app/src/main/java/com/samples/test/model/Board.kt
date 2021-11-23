@@ -1,4 +1,4 @@
-package com.samples.model
+package com.samples.test.model
 
 import com.samples.test.common.BOARD_SIZE
 

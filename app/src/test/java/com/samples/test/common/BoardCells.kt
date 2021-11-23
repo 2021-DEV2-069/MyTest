@@ -1,6 +1,6 @@
 package com.samples.test.common
 
-import com.samples.model.Cell
+import com.samples.test.model.Cell
 
 val cleanBoardCells = listOf(
     Cell(0, 0),

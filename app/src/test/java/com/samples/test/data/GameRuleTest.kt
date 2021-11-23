@@ -1,7 +1,7 @@
 package com.samples.test.data
 
-import com.samples.model.*
 import com.samples.test.common.cleanBoardCells
+import com.samples.test.model.*
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

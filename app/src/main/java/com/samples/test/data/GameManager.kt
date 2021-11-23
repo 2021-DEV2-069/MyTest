@@ -1,9 +1,9 @@
 package com.samples.test.data
 
-import com.samples.model.Board
-import com.samples.model.Cell
-import com.samples.model.GameStatus
-import com.samples.model.PlayerType
+import com.samples.test.model.Board
+import com.samples.test.model.Cell
+import com.samples.test.model.GameStatus
+import com.samples.test.model.PlayerType
 import kotlinx.coroutines.flow.Flow
 
 interface GameManager {

@@ -1,6 +1,6 @@
 package com.samples.test.data
 
-import com.samples.model.*
+import com.samples.test.model.*
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class GameManagerImpl constructor(private val gameRule: GameRule) : GameManager {

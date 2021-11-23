@@ -1,7 +1,7 @@
 package com.samples.test.data
 
-import com.samples.model.*
 import com.samples.test.common.BOARD_SIZE
+import com.samples.test.model.*
 
 class GameRule {
 

@@ -1,9 +1,9 @@
 package com.samples.test
 
-import com.samples.model.*
 import com.samples.test.common.BOARD_SIZE
 import com.samples.test.data.GameManagerImpl
 import com.samples.test.data.GameRule
+import com.samples.test.model.*
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
